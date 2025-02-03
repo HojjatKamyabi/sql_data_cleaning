@@ -131,13 +131,13 @@ from car_repair_staging2
 group by `Trade Name`
 order by 2 desc;
 
--- number of insurances issued order by year and month
+-- number of repairs order by year and month
 select substring(`Issue Date`, 1 , 7) as months , count(`Registration No.`) as sum_insurance
 from car_repair_staging2
 group by substring(`Issue Date`, 1 , 7)
 order by 2 desc;
 
--- rolling some of insurances based on the months of every year using a cte
+-- rolling some of repairs based on the months of every year using a cte
 with rolling_total as
 (
 select substring(`Issue Date`, 1 , 7) as months , count(`Registration No.`) as insurance_per_month
@@ -148,7 +148,7 @@ select months , insurance_per_month,
 sum(insurance_per_month) over (order by months desc) as rolling_total
 from rolling_total;
 
--- ranking each corporation had the highest number of insurances issued per year
+-- ranking each corporation had the highest number of rerpairs per year
 
 with corp_year (corps,years,totals) as
 (
